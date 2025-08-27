@@ -1,8 +1,8 @@
 import "./App.css";
-import ChannelSelectionScreen from "./screens/ChannelSelectionScreen";
+import ChannelPreviewScreen from "./screens/ChannelPreviewScreen";
 
 function App() {
-  return <ChannelSelectionScreen />
+  return <ChannelPreviewScreen />
 }
 
 export default App;
