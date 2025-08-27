@@ -4,7 +4,7 @@ import Input from "../components/Input";
 function ChannelMetadataEditScreen() {
   return <div className="channel-metadata-edit-screen">
     <main>
-        <h1 className="channel-metadata-edit-screen-title">Wybierz Kanał</h1>
+        <h1 className="channel-metadata-edit-screen-title">Edytuj metadane kanału</h1>
         <form className="metadata-form">
             <div className="metadata-form-col">
                 <Input name="title" title="Tytuł" />
