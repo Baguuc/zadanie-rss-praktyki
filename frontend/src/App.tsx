@@ -1,7 +1,8 @@
 import "./App.css";
-import ChannelItemAddScreen from "./screens/ChannelItemAddScreen";
+import ChannelCorrectnessCheckScreen from "./screens/ChannelCorrectnessCheckScreen";
+
 function App() {
-  return <ChannelItemAddScreen />
+  return <ChannelCorrectnessCheckScreen />
 }
 
 export default App;
