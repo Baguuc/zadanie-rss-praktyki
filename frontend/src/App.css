@@ -28,6 +28,27 @@ body {
     border: solid 2px var(--clr-fg1);
 }
 
+.inpt-root {
+    all: unset;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    gap: 4px;
+}
+
+.inpt-root > label {
+    color: var(--clr-fg1);
+    font-family: 'JetBrains Mono';
+}
+
+.inpt-root > input {
+    all: unset;
+    border: solid 2px var(--clr-fg1);
+    border-radius: 0;
+    background-color: var(--clr-bg0);
+    padding: 10px;
+}
+
 .modal-root {
     position: fixed;
     background-color: var(--clr-bg0-o);
@@ -261,4 +282,46 @@ body {
     padding: 8px;
     background-color: var(--clr-bg1);
     width: fit-content;
+}
+
+/*
+    ChannelMetadataEditScreen
+*/
+.channel-metadata-edit-screen {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    align-items: center;
+    justify-content: center;
+    width: 100dvw;
+    height: 100dvh;
+}
+
+.channel-metadata-edit-screen > main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    height: fit-content;
+}
+
+.channel-metadata-edit-screen-title {
+    font-family: 'JetBrains Mono';
+    font-weight: bold;
+    font-size: 41px;
+    color: var(--clr-fg1);
+    width: fit-content;
+}
+
+.metadata-form {
+    display: flex;
+    flex-direction: row;
+    gap: 0;
+}
+
+.metadata-form-col {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }

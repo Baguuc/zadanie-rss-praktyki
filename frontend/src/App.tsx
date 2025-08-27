@@ -1,8 +1,8 @@
 import "./App.css";
-import ChannelPreviewScreen from "./screens/ChannelPreviewScreen";
+import ChannelMetadataEditScreen from "./screens/ChannelMetadataEditScreen";
 
 function App() {
-  return <ChannelPreviewScreen />
+  return <ChannelMetadataEditScreen />
 }
 
 export default App;
