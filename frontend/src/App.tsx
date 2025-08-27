@@ -1,7 +1,8 @@
 import "./App.css";
+import ChannelSelectionScreen from "./screens/ChannelSelectionScreen";
 
 function App() {
-  return <h1>Hello, World</h1>
+  return <ChannelSelectionScreen />
 }
 
 export default App;
