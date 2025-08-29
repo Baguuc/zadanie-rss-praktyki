@@ -1,19 +1,9 @@
+import { Article } from "../data/channels";
 import Button from "./Button";
 import createModal from "./Modal";
 
 type ChannelArticleTableProps = {
-    article: {
-        title: string;
-        link: string;
-        description: string;
-        author: string;
-        category: string;
-        commentsLink: string;
-        guid: string;
-        pubDate: string;
-        source: string;
-        content: string;
-    }
+    article: Article
 };
 
 type Props = ChannelArticleTableProps;
@@ -45,7 +35,7 @@ function ChannelArticleTable({ article }: Props) {
                     <td>{article.category}</td>
                     <td>{article.commentsLink}</td>
                     <td>{article.guid}</td>
-                    <td>{article.pubDate}</td>
+                    <td>{article.publishedDate}</td>
                     <td>{article.source}</td>
                 </tr>
             </tbody>

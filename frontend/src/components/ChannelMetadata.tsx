@@ -1,21 +1,19 @@
+import { Channel } from "../data/channels";
 import { leftPad } from "../utils/utils";
 
 type ChannelMetadataProps = {
-    no: number;
-    title: string;
-    link: string;
-    description: string;
+    channel: Channel
 };
 
 type Props = ChannelMetadataProps;
 
-function ChannelMetadata({ no, title, link, description }: Props) {
-    const noString = leftPad(no.toString(), 2, "0");
+function ChannelMetadata({ channel }: Props) {
+    const idString = leftPad(channel.id.toString(), 2, "0");
 
     return <div className="channel-metadata">
-        <h3 className="channel-metadata-title">{noString} {title}</h3>
-        <p className="channel-metadata-link">{link}</p>
-        <p className="channel-metadata-description">{description}</p>
+        <h3 className="channel-metadata-title">{idString} {channel.title}</h3>
+        <p className="channel-metadata-link">{channel.link}</p>
+        <p className="channel-metadata-description">{channel.description}</p>
     </div>
 }
 
