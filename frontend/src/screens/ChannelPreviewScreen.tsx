@@ -4,10 +4,11 @@ import ChannelAvaibleIndicator from "../components/ChannelAvaibleIndicator";
 import ChannelMetadata from "../components/ChannelMetadata";
 import ChannelUpdatedIndicator from "../components/ChannelUpdatedIndicator";
 import ButtonLink from "../components/ButtonLink";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { Channel } from "../data/channels";
 import { useChannels } from "../hooks/channels";
 import useChannelId from "../hooks/channelId";
+import LoadingIndicator from "../components/LoadingIndicator";
 
 function ChannelPreviewScreen() {
   const [channelData, setChannelData] = useState<Channel>({
@@ -27,18 +28,14 @@ function ChannelPreviewScreen() {
 
   useEffect(() => {
     const channelData = channels.find(channelId);
-    console.log(channelData);
+    
     if (!!channelData) {
       setChannelData(channelData);
-    } else {
-      return;
     }
   }, [channelId]);
 
-  if (channelData === null) {
-    return <div className="channel-preview-screen" />;
-  } else {
-    return (
+  return (
+    <Suspense fallback={<LoadingIndicator />}>
       <div className="channel-preview-screen">
         <div className="navbar">
           <ButtonLink style={{ height: "auto" }} to="/channels">
@@ -82,8 +79,8 @@ function ChannelPreviewScreen() {
           </ul>
         </main>
       </div>
-    );
-  }
+    </Suspense>
+  );
 }
 
 export default ChannelPreviewScreen;
