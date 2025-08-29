@@ -7,15 +7,15 @@ type ChannelListProps = {
 type Props = ChannelListProps;
 
 function ChannelList({ channels }: Props) {
-    return <li className="channel-list">
+    return <ul className="channel-list">
         {channels.map((channel, idx) => <ChannelListItem
-            no={idx+1}
+            id={channel.id}
             title={channel.title}
             link={channel.link}
             description={channel.description}
-            key={idx+1}
+            key={idx}
         />)}
-    </li>
+    </ul>
 }
 
 export default ChannelList;

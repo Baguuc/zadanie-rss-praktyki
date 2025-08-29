@@ -1,17 +1,10 @@
+import { useParams } from "react-router";
 import Button from "../components/Button";
 import ChannelArticle from "../components/ChannelArticleTable";
 import ChannelAvaibleIndicator from "../components/ChannelAvaibleIndicator";
 import ChannelMetadata from "../components/ChannelMetadata";
 import ChannelUpdatedIndicator from "../components/ChannelUpdatedIndicator";
-
-type ChannelPreviewScreenProps = {
-    channel: {
-        no: number;
-        title: string;
-        link: string;
-        description: string;
-    }
-};
+import ButtonLink from "../components/ButtonLink";
 
 const mockChannel = { 
   no: 1,
@@ -46,14 +39,14 @@ const mockChannel = {
   ]
 };
 
-type Props = ChannelPreviewScreenProps;
-
 function ChannelPreviewScreen() {
+  const { channelId } = useParams();
+
   return <div className="channel-preview-screen">
     <div className="navbar">
-        <Button style={{ height: "auto" }}>Wróć</Button>
+        <ButtonLink style={{ height: "auto" }} to="/channels">Wróć</ButtonLink>
         <ChannelMetadata no={mockChannel.no} title={mockChannel.title} description={mockChannel.description} link={mockChannel.link} />
-        <Button style={{ height: "auto" }}>Edytuj</Button>
+        <ButtonLink style={{ height: "auto" }} to={`/channels/${channelId}/edit`}>Edytuj</ButtonLink>
         <Button style={{ height: "auto" }}>Wyślij</Button>
         <div className="navbar-right">
             <div className="channel-indicators">
@@ -75,7 +68,7 @@ function ChannelPreviewScreen() {
             <li><ChannelArticle article={mockChannel.articles[0]} /></li>
             <li><ChannelArticle article={mockChannel.articles[0]} /></li>
             <li><ChannelArticle article={mockChannel.articles[0]} /></li>
-            <li><Button style={{ width: "calc(100% - 20px)", height: "100%", textAlign: "center" }}>+</Button></li>
+            <li><ButtonLink style={{ width: "calc(100% - 20px)", height: "100%", textAlign: "center" }} to={`/channels/${channelId}/items/add`}>+</ButtonLink></li>
         </ul>
     </main>
   </div>
