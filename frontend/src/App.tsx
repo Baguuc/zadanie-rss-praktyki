@@ -12,18 +12,18 @@ function App() {
   return (
     <ChannelsProvider>
       <Routes>
-      <Route index element={<ChannelSelectionScreen />} />
-      <Route path="channels">
         <Route index element={<ChannelSelectionScreen />} />
-        <Route path="create" element={<ChannelCreateScreen />} />
-        <Route path=":channelId">
-          <Route index element={<ChannelPreviewScreen />}  />
-          <Route path="edit" element={<ChannelMetadataEditScreen />} />
-          <Route path="items/add" element={<ChannelItemAddScreen />} />
+        <Route path="channels">
+          <Route index element={<ChannelSelectionScreen />} />
+          <Route path="create" element={<ChannelCreateScreen />} />
+          <Route path=":channelId">
+            <Route index element={<ChannelPreviewScreen />} />
+            <Route path="edit" element={<ChannelMetadataEditScreen />} />
+            <Route path="items/add" element={<ChannelItemAddScreen />} />
+          </Route>
+          <Route path="check" element={<ChannelCorrectnessCheckScreen />} />
         </Route>
-        <Route path="check" element={<ChannelCorrectnessCheckScreen />} />
-      </Route>
-    </Routes>
+      </Routes>
     </ChannelsProvider>
   );
 }

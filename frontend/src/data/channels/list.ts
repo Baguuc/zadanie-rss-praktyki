@@ -1,7 +1,7 @@
 import { mockChannels } from ".";
 
 async function listSavedChannels() {
-    return mockChannels;
+  return mockChannels;
 }
 
 export default listSavedChannels;

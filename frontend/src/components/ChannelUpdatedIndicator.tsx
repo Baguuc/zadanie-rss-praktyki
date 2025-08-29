@@ -1,18 +1,16 @@
 type ChannelUpdatedIndicatorProps = {
-    updated: boolean;
+  updated: boolean;
 };
 
 type Props = ChannelUpdatedIndicatorProps;
 
 function ChannelUpdatedIndicator({ updated }: Props) {
-    const label = updated
-        ? "Kanał zdalny zaktualizowany"
-        : "Kanał zdalny niezaktualizowany";
-    const extraClass = updated 
-        ? "true"
-        : "false";
-    
-    return <p className={`channel-updated-indicator ${extraClass}`}>{label}</p>
+  const label = updated
+    ? "Kanał zdalny zaktualizowany"
+    : "Kanał zdalny niezaktualizowany";
+  const extraClass = updated ? "true" : "false";
+
+  return <p className={`channel-updated-indicator ${extraClass}`}>{label}</p>;
 }
 
 export default ChannelUpdatedIndicator;

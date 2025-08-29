@@ -23,17 +23,17 @@ function ChannelPreviewScreen() {
     link: "",
     publishedDate: "",
     title: "",
-    articles: []
+    articles: [],
   });
   const [channelId, setChannelId] = useState(-1);
 
   const channels = useChannels();
-  
+
   useEffect(() => {
     const id = parseInt(_channelId || "");
     console.log(_channelId, id);
 
-    if(!id) {
+    if (!id) {
       return;
     }
 
@@ -43,37 +43,61 @@ function ChannelPreviewScreen() {
   useEffect(() => {
     const channelData = channels.find(channelId);
     console.log(channelData);
-    if(!!channelData) {
+    if (!!channelData) {
       setChannelData(channelData);
     } else {
       return;
     }
   }, [channelId]);
 
-  if(channelData === null) {
-    return <div className="channel-preview-screen" />
+  if (channelData === null) {
+    return <div className="channel-preview-screen" />;
   } else {
-    return <div className="channel-preview-screen">
-      <div className="navbar">
-          <ButtonLink style={{ height: "auto" }} to="/channels">Wróć</ButtonLink>
+    return (
+      <div className="channel-preview-screen">
+        <div className="navbar">
+          <ButtonLink style={{ height: "auto" }} to="/channels">
+            Wróć
+          </ButtonLink>
           <ChannelMetadata channel={channelData} />
-          <ButtonLink style={{ height: "auto" }} to={`/channels/${channelId}/edit`}>Edytuj</ButtonLink>
+          <ButtonLink
+            style={{ height: "auto" }}
+            to={`/channels/${channelId}/edit`}
+          >
+            Edytuj
+          </ButtonLink>
           <Button style={{ height: "auto" }}>Wyślij</Button>
           <div className="navbar-right">
-              <div className="channel-indicators">
-                  <ChannelUpdatedIndicator updated={true} />
-                  <ChannelAvaibleIndicator updated={false} />
-              </div>
+            <div className="channel-indicators">
+              <ChannelUpdatedIndicator updated={true} />
+              <ChannelAvaibleIndicator updated={false} />
+            </div>
           </div>
-      </div>
-      <main className="channel-articles">
+        </div>
+        <main className="channel-articles">
           <h1>Artykuły kanału</h1>
           <ul className="channel-articles-list">
-              {channelData.articles.map(article => <li><ChannelArticle article={article} /></li>)}
-              <li><ButtonLink style={{ width: "calc(100% - 20px)", height: "100%", textAlign: "center" }} to={`/channels/${channelId}/items/add`}>+</ButtonLink></li>
+            {channelData.articles.map((article) => (
+              <li>
+                <ChannelArticle article={article} />
+              </li>
+            ))}
+            <li>
+              <ButtonLink
+                style={{
+                  width: "calc(100% - 20px)",
+                  height: "100%",
+                  textAlign: "center",
+                }}
+                to={`/channels/${channelId}/items/add`}
+              >
+                +
+              </ButtonLink>
+            </li>
           </ul>
-      </main>
-    </div>
+        </main>
+      </div>
+    );
   }
 }
 

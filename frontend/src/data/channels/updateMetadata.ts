@@ -1,19 +1,19 @@
 import { ChannelMetadata, findChannel, mockChannels } from ".";
 
 type Params = {
-    channelId: number;
-    new: ChannelMetadata
+  channelId: number;
+  new: ChannelMetadata;
 };
 
 async function updateChannelMetadata(params: Params) {
-    const channelIdx = findChannel(params.channelId);
-    const oldData = mockChannels[channelIdx];
-    mockChannels[channelIdx] = {
-        ...oldData,  
-        ...params.new
-    };
+  const channelIdx = findChannel(params.channelId);
+  const oldData = mockChannels[channelIdx];
+  mockChannels[channelIdx] = {
+    ...oldData,
+    ...params.new,
+  };
 
-    return mockChannels[channelIdx];
+  return mockChannels[channelIdx];
 }
 
 export default updateChannelMetadata;

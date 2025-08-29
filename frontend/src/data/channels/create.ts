@@ -1,18 +1,18 @@
 import { Channel, ChannelMetadata, mockChannels } from ".";
 
 type Params = {
-    data: ChannelMetadata
+  data: ChannelMetadata;
 };
 
 async function createChannel(params: Params) {
-    const data: Channel = {
-      ...params.data,
-      id: mockChannels[mockChannels.length-1].id+1,
-      articles: []
-    };
-    mockChannels.push(data);
+  const data: Channel = {
+    ...params.data,
+    id: mockChannels[mockChannels.length - 1].id + 1,
+    articles: [],
+  };
+  mockChannels.push(data);
 
-    return data;
+  return data;
 }
 
 export default createChannel;
