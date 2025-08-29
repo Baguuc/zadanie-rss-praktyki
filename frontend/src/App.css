@@ -46,6 +46,8 @@ body {
     border: solid 2px var(--clr-fg1);
     border-radius: 0;
     background-color: var(--clr-bg0);
+    color: var(--clr-fg1);
+    font-family: 'JetBrains Mono';
     padding: 10px;
 }
 
