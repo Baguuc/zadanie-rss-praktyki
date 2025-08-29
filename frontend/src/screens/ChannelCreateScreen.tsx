@@ -2,28 +2,26 @@ import { useNavigate } from "react-router";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import { useState } from "react";
-import { CreateChannelParams } from "../data/channels";
+import { ChannelMetadata } from "../data/channels";
 import { useChannels } from "../hooks/channels";
 
 function ChannelMetadataEditScreen() {
   const navigate = useNavigate();
   const channels = useChannels();
 
-  const [newData, setNewData] = useState<CreateChannelParams>({
-    data: {
-      category: "",
-      channelManager: "",
-      copyright: "",
-      description: "",
-      language: "",
-      link: "",
-      publishedDate: "",
-      title: "",
-    },
+  const [data, setData] = useState<ChannelMetadata>({
+    category: "",
+    channelManager: "",
+    copyright: "",
+    description: "",
+    language: "",
+    link: "",
+    publishedDate: "",
+    title: "",
   });
 
   async function create() {
-    channels.create(newData);
+    channels.create({ data });
 
     navigate(`/channels`);
   }
@@ -37,11 +35,12 @@ function ChannelMetadataEditScreen() {
             <Input
               name="title"
               title="Tytuł"
-              value={newData.data.title}
+              value={data.title}
               onInput={(ev) =>
-                setNewData((prev) => {
+                setData((prev) => {
                   return {
-                    data: { ...prev.data, title: (ev.target as any).value },
+                    ...prev,
+                    title: (ev.target as any).value,
                   };
                 })
               }
@@ -49,11 +48,12 @@ function ChannelMetadataEditScreen() {
             <Input
               name="link"
               title="Link"
-              value={newData.data.link}
+              value={data.link}
               onInput={(ev) =>
-                setNewData((prev) => {
+                setData((prev) => {
                   return {
-                    data: { ...prev.data, link: (ev.target as any).value },
+                    ...prev,
+                    link: (ev.target as any).value,
                   };
                 })
               }
@@ -61,14 +61,12 @@ function ChannelMetadataEditScreen() {
             <Input
               name="description"
               title="Opis"
-              value={newData.data.description}
+              value={data.description}
               onInput={(ev) =>
-                setNewData((prev) => {
+                setData((prev) => {
                   return {
-                    data: {
-                      ...prev.data,
-                      description: (ev.target as any).value,
-                    },
+                    ...prev,
+                    description: (ev.target as any).value,
                   };
                 })
               }
@@ -76,11 +74,12 @@ function ChannelMetadataEditScreen() {
             <Input
               name="language"
               title="Język"
-              value={newData.data.language}
+              value={data.language}
               onInput={(ev) =>
-                setNewData((prev) => {
+                setData((prev) => {
                   return {
-                    data: { ...prev.data, language: (ev.target as any).value },
+                    ...prev,
+                    language: (ev.target as any).value,
                   };
                 })
               }
@@ -90,11 +89,12 @@ function ChannelMetadataEditScreen() {
             <Input
               name="copyright"
               title="Prawa autorskie"
-              value={newData.data.copyright}
+              value={data.copyright}
               onInput={(ev) =>
-                setNewData((prev) => {
+                setData((prev) => {
                   return {
-                    data: { ...prev.data, copyright: (ev.target as any).value },
+                    ...prev,
+                    copyright: (ev.target as any).value,
                   };
                 })
               }
@@ -102,14 +102,12 @@ function ChannelMetadataEditScreen() {
             <Input
               name="channel-manager"
               title="Manadżer kanału"
-              value={newData.data.channelManager}
+              value={data.channelManager}
               onInput={(ev) =>
-                setNewData((prev) => {
+                setData((prev) => {
                   return {
-                    data: {
-                      ...prev.data,
-                      channelManager: (ev.target as any).value,
-                    },
+                    ...prev,
+                    channelManager: (ev.target as any).value,
                   };
                 })
               }
@@ -117,14 +115,12 @@ function ChannelMetadataEditScreen() {
             <Input
               name="publish-date"
               title="Data publikacji"
-              value={newData.data.publishedDate}
+              value={data.publishedDate}
               onInput={(ev) =>
-                setNewData((prev) => {
+                setData((prev) => {
                   return {
-                    data: {
-                      ...prev.data,
-                      publishedDate: (ev.target as any).value,
-                    },
+                    ...prev,
+                    publishedDate: (ev.target as any).value,
                   };
                 })
               }
@@ -132,11 +128,12 @@ function ChannelMetadataEditScreen() {
             <Input
               name="category"
               title="Kategoria"
-              value={newData.data.category}
+              value={data.category}
               onInput={(ev) =>
-                setNewData((prev) => {
+                setData((prev) => {
                   return {
-                    data: { ...prev.data, category: (ev.target as any).value },
+                    ...prev,
+                    category: (ev.target as any).value,
                   };
                 })
               }
