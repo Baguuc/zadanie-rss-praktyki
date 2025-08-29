@@ -1,4 +1,3 @@
-import { useNavigate, useParams } from "react-router";
 import Button from "../components/Button";
 import ChannelArticle from "../components/ChannelArticleTable";
 import ChannelAvaibleIndicator from "../components/ChannelAvaibleIndicator";
@@ -8,11 +7,9 @@ import ButtonLink from "../components/ButtonLink";
 import { useEffect, useState } from "react";
 import { Channel } from "../data/channels";
 import { useChannels } from "../hooks/channels";
+import useChannelId from "../hooks/channelId";
 
 function ChannelPreviewScreen() {
-  const navigate = useNavigate();
-  const { channelId: _channelId } = useParams();
-
   const [channelData, setChannelData] = useState<Channel>({
     id: 0,
     category: "",
@@ -25,20 +22,8 @@ function ChannelPreviewScreen() {
     title: "",
     articles: [],
   });
-  const [channelId, setChannelId] = useState(-1);
-
   const channels = useChannels();
-
-  useEffect(() => {
-    const id = parseInt(_channelId || "");
-    console.log(_channelId, id);
-
-    if (!id) {
-      return;
-    }
-
-    setChannelId(id);
-  }, []);
+  const channelId = useChannelId();
 
   useEffect(() => {
     const channelData = channels.find(channelId);

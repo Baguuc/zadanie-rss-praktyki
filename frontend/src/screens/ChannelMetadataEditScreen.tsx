@@ -1,14 +1,14 @@
-import { useNavigate, useParams } from "react-router";
+import { useNavigate } from "react-router";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import { useEffect, useState } from "react";
 import { ChannelMetadata } from "../data/channels";
 import { useChannels } from "../hooks/channels";
+import useChannelId from "../hooks/channelId";
 
 function ChannelMetadataEditScreen() {
   const navigate = useNavigate();
   const channels = useChannels();
-  const { channelId: _channelId } = useParams();
 
   const [metadata, setMetadata] = useState<ChannelMetadata>({
     category: "",
@@ -20,17 +20,7 @@ function ChannelMetadataEditScreen() {
     publishedDate: "",
     title: "",
   });
-  const [channelId, setChannelId] = useState(-1);
-
-  useEffect(() => {
-    const id = parseInt(_channelId || "");
-
-    if (!id) {
-      return;
-    }
-
-    setChannelId(id);
-  }, []);
+  const channelId = useChannelId();
 
   useEffect(() => {
     const metadata = channels.find(channelId);

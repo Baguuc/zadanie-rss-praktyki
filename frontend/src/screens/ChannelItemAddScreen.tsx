@@ -1,14 +1,15 @@
 import { useState } from "react";
 import Button from "../components/Button";
 import Input from "../components/Input";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate } from "react-router";
 import { Article } from "../data/channels";
 import { useChannels } from "../hooks/channels";
+import useChannelId from "../hooks/channelId";
 
 function ChannelItemAddScreen() {
   const navigate = useNavigate();
   const channels = useChannels();
-  const { channelId } = useParams();
+  const channelId = useChannelId();
 
   const [data, setData] = useState<Article>({
     guid: "",
@@ -24,10 +25,8 @@ function ChannelItemAddScreen() {
   });
 
   async function add() {
-    if (!channelId) return;
-
     await channels.addArticle({
-      channelId: parseInt(channelId),
+      channelId,
       article: data,
     });
 
