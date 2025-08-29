@@ -6,10 +6,12 @@ import ChannelPreviewScreen from "./screens/ChannelPreviewScreen";
 import ChannelMetadataEditScreen from "./screens/ChannelMetadataEditScreen";
 import ChannelItemAddScreen from "./screens/ChannelItemAddScreen";
 import ChannelCorrectnessCheckScreen from "./screens/ChannelCorrectnessCheckScreen";
+import { ChannelsProvider } from "./hooks/channels";
 
 function App() {
   return (
-    <Routes>
+    <ChannelsProvider>
+      <Routes>
       <Route index element={<ChannelSelectionScreen />} />
       <Route path="channels">
         <Route index element={<ChannelSelectionScreen />} />
@@ -22,6 +24,7 @@ function App() {
         <Route path="check" element={<ChannelCorrectnessCheckScreen />} />
       </Route>
     </Routes>
+    </ChannelsProvider>
   );
 }
 

@@ -6,33 +6,57 @@ import ChannelMetadata from "../components/ChannelMetadata";
 import ChannelUpdatedIndicator from "../components/ChannelUpdatedIndicator";
 import ButtonLink from "../components/ButtonLink";
 import { useEffect, useState } from "react";
-import { Channel, getChannel } from "../data/channels";
+import { Channel } from "../data/channels";
+import { useChannels } from "../hooks/channels";
 
 function ChannelPreviewScreen() {
   const navigate = useNavigate();
-  const { channelId } = useParams();
+  const { channelId: _channelId } = useParams();
 
-  const [ channel, setChannel ] = useState<Channel | null>(null);
+  const [channelData, setChannelData] = useState<Channel>({
+    id: 0,
+    category: "",
+    channelManager: "",
+    copyright: "",
+    description: "",
+    language: "",
+    link: "",
+    publishedDate: "",
+    title: "",
+    articles: []
+  });
+  const [channelId, setChannelId] = useState(-1);
 
+  const channels = useChannels();
+  
   useEffect(() => {
-    const id = parseInt(channelId || "");
+    const id = parseInt(_channelId || "");
+    console.log(_channelId, id);
 
     if(!id) {
-      navigate("/channels")
+      return;
     }
 
-    getChannel(id).then(setChannel);
+    setChannelId(id);
   }, []);
 
-  useEffect(() => { console.log(channel) }, [channel]);
+  useEffect(() => {
+    const channelData = channels.find(channelId);
+    console.log(channelData);
+    if(!!channelData) {
+      setChannelData(channelData);
+    } else {
+      return;
+    }
+  }, [channelId]);
 
-  if(channel === null) {
+  if(channelData === null) {
     return <div className="channel-preview-screen" />
   } else {
     return <div className="channel-preview-screen">
       <div className="navbar">
           <ButtonLink style={{ height: "auto" }} to="/channels">Wróć</ButtonLink>
-          <ChannelMetadata channel={channel} />
+          <ChannelMetadata channel={channelData} />
           <ButtonLink style={{ height: "auto" }} to={`/channels/${channelId}/edit`}>Edytuj</ButtonLink>
           <Button style={{ height: "auto" }}>Wyślij</Button>
           <div className="navbar-right">
@@ -45,7 +69,7 @@ function ChannelPreviewScreen() {
       <main className="channel-articles">
           <h1>Artykuły kanału</h1>
           <ul className="channel-articles-list">
-              {channel.articles.map(article => <li><ChannelArticle article={article} /></li>)}
+              {channelData.articles.map(article => <li><ChannelArticle article={article} /></li>)}
               <li><ButtonLink style={{ width: "calc(100% - 20px)", height: "100%", textAlign: "center" }} to={`/channels/${channelId}/items/add`}>+</ButtonLink></li>
           </ul>
       </main>

@@ -1,3 +1,8 @@
+import createChannel, { CreateChannelParams } from "./create";
+import listSavedChannels from "./list";
+import updateChannelMetadata, { UpdateChannelMetadataParams } from "./updateMetadata";
+import addChannelArticle, { AddChannelArticleParams } from "./addArticle";
+
 type Channel = { 
   id: number,
   title: string;
@@ -11,6 +16,7 @@ type Channel = {
   articles: Article[]
 };
 
+type ChannelMetadata = Omit<Omit<Channel, 'id'>, 'articles'>;
 
 type Article = {
     title: string;
@@ -139,45 +145,27 @@ const mockChannels: Channel[] = [
   }
 ];
 
-function findChannel(channelId: number) {
+function findChannelIndex(channelId: number) {
   return mockChannels.findIndex(channel => channel.id === channelId);
 }
 
-async function getChannels() {
-    return mockChannels;
+/** getChannelsRepo - function for getting channels repo - an object with all function to interact with saved channels while automatically saving them */
+function getChannelsRepo() {
+  return {
+    createChannel,
+    listSavedChannels,
+    updateChannelMetadata,
+    addChannelArticle
+  };
 }
 
-async function getChannel(channelId: number) {
-    return mockChannels[findChannel(channelId)];
-}
-
-async function createChannel(channel: Omit<Omit<Channel, 'id'>, 'articles'>) {
-    const data: Channel = {
-      ...channel,
-      id: mockChannels[mockChannels.length-1].id+1,
-      articles: []
-    };
-    mockChannels.push(data);
-
-    return data;
-}
-
-async function updateChannel(channelId: number, newData: Partial<Channel>) {
-    const channelIdx = findChannel(channelId);
-    const oldData = mockChannels[channelIdx];
-    mockChannels[channelIdx] = {
-       ...oldData,  
-      ...newData
-    };
-
-    return mockChannels[channelIdx];
-}
-
-async function addArticle(channelId: number, article: Article) {
-    const channel = await getChannel(channelId);
-
-    return await updateChannel(channelId, { articles: [...channel.articles, article] });
-}
-
-export { getChannels, getChannel, createChannel, updateChannel, addArticle };
-export type { Channel, Article };
+export default getChannelsRepo;
+export { findChannelIndex as findChannel, mockChannels };
+export type {
+  Channel,
+  ChannelMetadata,
+  Article,
+  CreateChannelParams,
+  UpdateChannelMetadataParams,
+  AddChannelArticleParams
+};

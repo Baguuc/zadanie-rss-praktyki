@@ -2,34 +2,55 @@ import { useNavigate, useParams } from "react-router";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import { useEffect, useState } from "react";
-import { Channel, getChannel, updateChannel } from "../data/channels";
+import { ChannelMetadata } from "../data/channels";
+import { useChannels } from "../hooks/channels";
 
 function ChannelMetadataEditScreen() {
   const navigate = useNavigate();
-  const { channelId } = useParams();
+  const channels = useChannels();
+  const { channelId: _channelId } = useParams();
 
-  const [ channel, setChannel ] = useState<Partial<Channel>>();
+  const [metadata, setMetadata] = useState<ChannelMetadata>({
+    category: "",
+    channelManager: "",
+    copyright: "",
+    description: "",
+    language: "",
+    link: "",
+    publishedDate: "",
+    title: ""
+  });
+  const [channelId, setChannelId] = useState(-1);
 
   useEffect(() => {
-    const id = parseInt(channelId || "");
+    const id = parseInt(_channelId || "");
 
     if(!id) {
-      navigate("/channels")
+      return;
     }
 
-    getChannel(id).then(setChannel);
+    setChannelId(id);
   }, []);
+
+  useEffect(() => {
+    const metadata = channels.find(channelId);
+    if(!!metadata) {
+      setMetadata(metadata);
+    } else {
+      return;
+    }
+  }, [channelId]);
   
-  if(!channel) {
-    return <div className="channel-metadata-edit-screen" />
-  } else {
     async function update() {
-      await updateChannel(channel!.id as 1 | 2 | 3, channel!);
+      await channels.updateMetadata({
+        channelId,
+        new: metadata
+      });
       
-      navigate(`/channels/${channel?.id}`);
+      navigate(`/channels/${channelId}`);
     }
 
-     return (
+    return (
       <div className="channel-metadata-edit-screen">
         <main>
             <h1 className="channel-metadata-edit-screen-title">Edytuj metadane kanału</h1>
@@ -38,52 +59,52 @@ function ChannelMetadataEditScreen() {
                     <Input 
                       name="title"
                       title="Tytuł" 
-                      value={channel.title}
-                      onInput={(ev) => setChannel(prev => { return { ...prev, title: (ev.target as any).value }} )}
+                      value={metadata.title}
+                      onInput={(ev) => setMetadata(prev => { return { ...prev, title: (ev.target as any).value }} )}
                     />
                     <Input 
                       name="link" 
                       title="Link" 
-                      value={channel.link} 
-                      onInput={(ev) => setChannel(prev => { return { ...prev, link: (ev.target as any).value }} )}
+                      value={metadata.link} 
+                      onInput={(ev) => setMetadata(prev => { return { ...prev, link: (ev.target as any).value }} )}
                     />
                     <Input
                       name="description"
                       title="Opis"
-                      value={channel.description}
-                      onInput={(ev) => setChannel(prev => { return { ...prev, description: (ev.target as any).value }} )}
+                      value={metadata.description}
+                      onInput={(ev) => setMetadata(prev => { return { ...prev, description: (ev.target as any).value }} )}
                     />
                     <Input
                       name="language"
                       title="Język"
-                      value={channel.language}
-                      onInput={(ev) => setChannel(prev => { return { ...prev, language: (ev.target as any).value }} )}
+                      value={metadata.language}
+                      onInput={(ev) => setMetadata(prev => { return { ...prev, language: (ev.target as any).value }} )}
                     />
                 </div>
                 <div className="metadata-form-col">
                     <Input
                       name="copyright"
                       title="Prawa autorskie"
-                      value={channel.copyright}
-                      onInput={(ev) => setChannel(prev => { return { ...prev, copyright: (ev.target as any).value }} )}
+                      value={metadata.copyright}
+                      onInput={(ev) => setMetadata(prev => { return { ...prev, copyright: (ev.target as any).value }} )}
                     />
                     <Input
                       name="channel-manager"
                       title="Manadżer kanału"
-                      value={channel.channelManager}
-                      onInput={(ev) => setChannel(prev => { return { ...prev, channelManager: (ev.target as any).value }} )}
+                      value={metadata.channelManager}
+                      onInput={(ev) => setMetadata(prev => { return { ...prev, channelManager: (ev.target as any).value }} )}
                     />
                     <Input
                       name="publish-date"
                       title="Data publikacji"
-                      value={channel.publishedDate}
-                      onInput={(ev) => setChannel(prev => { return { ...prev, publishedDate: (ev.target as any).value }} )}
+                      value={metadata.publishedDate}
+                      onInput={(ev) => setMetadata(prev => { return { ...prev, publishedDate: (ev.target as any).value }} )}
                     />
                     <Input 
                       name="category"
                       title="Kategoria"
-                      value={channel.category}
-                      onInput={(ev) => setChannel(prev => { return { ...prev, category: (ev.target as any).value }} )}
+                      value={metadata.category}
+                      onInput={(ev) => setMetadata(prev => { return { ...prev, category: (ev.target as any).value }} )}
                     />
                 </div>
             </form>
@@ -91,7 +112,6 @@ function ChannelMetadataEditScreen() {
         </main>
       </div>
     );
-  }
 }
 
 export default ChannelMetadataEditScreen;
