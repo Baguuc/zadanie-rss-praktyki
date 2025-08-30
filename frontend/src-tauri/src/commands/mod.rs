@@ -40,6 +40,7 @@ impl serde::Serialize for UpdateChannelError {
 
 #[tauri::command]
 pub fn add_article(id: i32, article: crate::data::channel::Article, app: tauri::AppHandle) -> Result<(), AddArticleChannelError> {
+    println!("{:?}", article);
     let mut channel = crate::data::channel::Channel::read(id, &app)?;
     channel.add_article(article, &app)?;
 

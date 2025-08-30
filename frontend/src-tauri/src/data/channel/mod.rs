@@ -6,8 +6,10 @@ pub struct Channel {
     pub description: String,
     pub language: String,
     pub copyright: String,
-    pub channel_manager: String,
-    pub published_date: String,
+    // casing only for purpose of JS compatibility
+    pub channelManager: String,
+    // casing only for purpose of JS compatibility
+    pub publishedDate: String,
     pub category: String,
     pub articles: Vec<Article>,
 }
@@ -19,8 +21,10 @@ pub struct ChannelMetadata {
     pub description: String,
     pub language: String,
     pub copyright: String,
-    pub channel_manager: String,
-    pub published_date: String,
+    // casing only for purpose of JS compatibility
+    pub channelManager: String,
+    // casing only for purpose of JS compatibility
+    pub publishedDate: String,
     pub category: String,
 }
 
@@ -31,9 +35,11 @@ pub struct Article {
     pub description: String,
     pub author: String,
     pub category: String,
-    pub comments_link: String,
+    // casing only for purpose of JS compatibility
+    pub commentsLink: String,
     pub guid: String,
-    pub published_date: String,
+    // casing only for purpose of JS compatibility
+    pub publishedDate: String,
     pub source: String,
     pub content: String,
 }
@@ -57,8 +63,8 @@ impl Channel {
         self.description = new_metadata.description;
         self.language = new_metadata.language;
         self.copyright = new_metadata.copyright;
-        self.channel_manager = new_metadata.channel_manager;
-        self.published_date = new_metadata.published_date;
+        self.channelManager = new_metadata.channelManager;
+        self.publishedDate = new_metadata.publishedDate;
         self.category = new_metadata.category;
 
         return self.save(app);

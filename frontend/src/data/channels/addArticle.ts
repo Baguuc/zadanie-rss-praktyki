@@ -9,11 +9,7 @@ type Params = {
 async function addChannelArticle(params: Params) {
   await invoke('add_article', { 
     id: params.channelId,
-    article: {
-      ...params.article,
-      comments_link: params.article.commentsLink,
-      published_date: params.article.publishedDate
-    } 
+    article: params.article
   });
 }
 

@@ -92,6 +92,15 @@ function ChannelItemAddScreen() {
                 }
               />
               <Input
+                name="published-date"
+                title="Data publikacji"
+                onInput={(ev) =>
+                  setData((prev) => {
+                    return { ...prev, publishedDate: (ev.target as any).value };
+                  })
+                }
+              />
+              <Input
                 name="comments-link"
                 title="Link do komentarzy"
                 onInput={(ev) =>
