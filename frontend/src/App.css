@@ -41,7 +41,7 @@ body {
     font-family: 'JetBrains Mono';
 }
 
-.inpt-root > input {
+.inpt-root > .inpt {
     all: unset;
     border: solid 2px var(--clr-fg1);
     border-radius: 0;
@@ -337,6 +337,7 @@ body {
     gap: 0;
     align-items: center;
     justify-content: center;
+    width: 100%;
 }
 
 .item-form-row {

@@ -10,7 +10,7 @@ type Props = ChannelArticleTableProps;
 
 function ChannelArticleTable({ article }: Props) {
   const { element: modal, toggle: toggleModal } = createModal({
-    children: article.content,
+    children: <pre>{article.content}</pre>,
   });
 
   return (

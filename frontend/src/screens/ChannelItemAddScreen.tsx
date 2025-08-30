@@ -6,6 +6,7 @@ import { Article } from "../data/channels";
 import { useChannels } from "../hooks/channels";
 import useChannelId from "../hooks/channelId";
 import LoadingIndicator from "../components/LoadingIndicator";
+import MultilineInput from "../components/MultilineInput";
 
 function ChannelItemAddScreen() {
   const navigate = useNavigate();
@@ -109,6 +110,17 @@ function ChannelItemAddScreen() {
                 }
               />
             </div>
+            <MultilineInput
+                style={{ width: "100%", height: "fit-content" }}
+                name="content"
+                title="Zawartość"
+                onInput={(ev) =>
+                  setData((prev) => {
+                    console.log((ev.target as any).value);
+                    return { ...prev, content: (ev.target as any).value };
+                  })
+                }
+              />
           </form>
           <Button
             style={{
