@@ -23,13 +23,17 @@ function ChannelMetadataEditScreen() {
   });
   const channelId = useChannelId();
 
-  useEffect(() => {
+  const refresh = () => {
     const metadata = channels.find(channelId);
     
     if (!!metadata) {
       setMetadata(metadata);
     }
-  }, [channelId]);
+  };
+
+  useEffect(() => {
+    refresh();
+  }, [channelId, channels.list]);
 
   async function update() {
     await channels.updateMetadata({

@@ -26,13 +26,17 @@ function ChannelPreviewScreen() {
   const channels = useChannels();
   const channelId = useChannelId();
 
-  useEffect(() => {
+  const refresh = () => {
     const channelData = channels.find(channelId);
     
     if (!!channelData) {
       setChannelData(channelData);
     }
-  }, [channelId]);
+  };
+
+  useEffect(() => {
+    refresh();
+  }, [channelId, channels.list]);
 
   return (
     <Suspense fallback={<LoadingIndicator />}>
