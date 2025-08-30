@@ -65,9 +65,7 @@ impl Channel {
     }
 
     pub fn add_article(self: &mut Self, article: Article, app: &tauri::AppHandle) -> Result<(), crate::utils::json::SaveJsonError> {
-        println!("Articles OLD: {:?}", self.articles);
         self.articles.push(article);
-        println!("Articles NEW: {:?}", self.articles);
 
         return self.save(app);
     }

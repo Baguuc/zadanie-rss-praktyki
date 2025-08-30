@@ -1,6 +1,6 @@
 #[tauri::command]
 pub fn create_channel(channel: crate::data::channel::Channel, app: tauri::AppHandle) {
-    let result = channel.save(&app);
+    let _ = channel.save(&app);
 }
 
 
