@@ -1,16 +1,20 @@
-import { Channel, ChannelMetadata, mockChannels } from ".";
+import { invoke } from "@tauri-apps/api/core";
+import { ChannelMetadata } from ".";
+import listSavedChannels from "./list";
 
 type Params = {
   data: ChannelMetadata;
 };
 
 async function createChannel(params: Params) {
-  const data: Channel = {
+  const data = {
     ...params.data,
-    id: mockChannels[mockChannels.length - 1].id + 1,
     articles: [],
+    channel_manager: params.data.channelManager,
+    published_date: params.data.publishedDate,
+    id: (await listSavedChannels()).length+1
   };
-  mockChannels.push(data);
+  await invoke('create_channel', { channel: data });
 
   return data;
 }

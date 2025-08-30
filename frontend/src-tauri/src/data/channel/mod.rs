@@ -40,15 +40,15 @@ pub struct Article {
 
 impl Channel {
     pub fn read_all(app: &tauri::AppHandle) -> Vec<Self> {
-        return crate::utils::json::list_json(String::from("/"), app).unwrap_or(vec![]);
+        return crate::utils::json::list_json(String::new(), app).unwrap_or(vec![]);
     }
 
     pub fn read(id: i32, app: &tauri::AppHandle) -> Result<Self, crate::utils::json::ReadJsonError> {
-        return crate::utils::json::read_json(format!("/channel-{}.json", id), app);
+        return crate::utils::json::read_json(format!("channel-{}.json", id), app);
     }
 
     pub fn save(self: &Self, app: &tauri::AppHandle) -> Result<(), crate::utils::json::SaveJsonError> {
-        return crate::utils::json::save_json(self, format!("/channel-{}.json", self.id), app);
+        return crate::utils::json::save_json(self, format!("channel-{}.json", self.id), app);
     }
 
     pub fn update(self: &mut Self, new_metadata: ChannelMetadata, app: &tauri::AppHandle) -> Result<(), crate::utils::json::SaveJsonError> {
@@ -65,7 +65,9 @@ impl Channel {
     }
 
     pub fn add_article(self: &mut Self, article: Article, app: &tauri::AppHandle) -> Result<(), crate::utils::json::SaveJsonError> {
+        println!("Articles OLD: {:?}", self.articles);
         self.articles.push(article);
+        println!("Articles NEW: {:?}", self.articles);
 
         return self.save(app);
     }

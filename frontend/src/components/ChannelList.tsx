@@ -1,5 +1,5 @@
 import { Channel } from "../data/channels";
-import ChannelListItem, { ChannelListItemProps } from "./ChannelListItem";
+import ChannelListItem from "./ChannelListItem";
 
 type ChannelListProps = {
   channels: Channel[];

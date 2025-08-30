@@ -1,4 +1,5 @@
-import { ChannelMetadata, findChannel, mockChannels } from ".";
+import { invoke } from "@tauri-apps/api/core";
+import { ChannelMetadata } from ".";
 
 type Params = {
   channelId: number;
@@ -6,14 +7,10 @@ type Params = {
 };
 
 async function updateChannelMetadata(params: Params) {
-  const channelIdx = findChannel(params.channelId);
-  const oldData = mockChannels[channelIdx];
-  mockChannels[channelIdx] = {
-    ...oldData,
-    ...params.new,
-  };
-
-  return mockChannels[channelIdx];
+  await invoke("update_channel", { 
+    id: params.channelId, 
+    newMetadata: params.new
+  });
 }
 
 export default updateChannelMetadata;

@@ -14,8 +14,4 @@ function shortenString(str: string, toLength: number) {
   }
 }
 
-function or<T>(value: T | undefined | null, fallback: T) {
-  return !value ? fallback : value;
-}
-
 export { leftPad, shortenString };

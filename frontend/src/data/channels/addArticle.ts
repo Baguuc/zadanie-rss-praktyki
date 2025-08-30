@@ -1,4 +1,5 @@
-import { Article, findChannel, mockChannels } from ".";
+import { invoke } from "@tauri-apps/api/core";
+import { Article } from ".";
 
 type Params = {
   channelId: number;
@@ -6,13 +7,14 @@ type Params = {
 };
 
 async function addChannelArticle(params: Params) {
-  const channelIdx = findChannel(params.channelId);
-  const oldData = mockChannels[channelIdx];
-
-  mockChannels[channelIdx] = {
-    ...oldData,
-    articles: [...oldData.articles, params.article],
-  };
+  await invoke('add_article', { 
+    id: params.channelId,
+    article: {
+      ...params.article,
+      comments_link: params.article.commentsLink,
+      published_date: params.article.publishedDate
+    } 
+  });
 }
 
 export default addChannelArticle;
