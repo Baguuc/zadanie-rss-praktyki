@@ -27,6 +27,9 @@ function ChannelItemAddScreen() {
   });
 
   async function add() {
+    // as link is unique for each article it can be used as GUID.
+    data.guid = data.link;
+    
     await channels.addArticle({
       channelId,
       article: data,
