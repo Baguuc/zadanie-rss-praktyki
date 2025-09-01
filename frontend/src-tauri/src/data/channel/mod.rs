@@ -1,16 +1,18 @@
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+
 pub struct Channel {
     pub id: i32,
     pub title: String,
     pub link: String,
     pub description: String,
-    pub language: String,
-    pub copyright: String,
+    pub language: Option<String>,
+    pub copyright: Option<String>,
     // casing only for purpose of JS compatibility
-    pub channelManager: String,
+    pub managingEditor: Option<String>,
+    pub webMaster: Option<String>,
     // casing only for purpose of JS compatibility
-    pub publishedDate: String,
-    pub category: String,
+    pub pubDate: Option<String>,
+    pub category: Option<Vec<String>>,
     pub articles: Vec<Article>,
 }
 
@@ -19,29 +21,36 @@ pub struct ChannelMetadata {
     pub title: String,
     pub link: String,
     pub description: String,
-    pub language: String,
-    pub copyright: String,
+    pub language: Option<String>,
+    pub copyright: Option<String>,
     // casing only for purpose of JS compatibility
-    pub channelManager: String,
+    pub managingEditor: Option<String>,
+    pub webMaster: Option<String>,
     // casing only for purpose of JS compatibility
-    pub publishedDate: String,
-    pub category: String,
+    pub pubDate: Option<String>,
+    pub category: Option<Vec<String>>,
 }
+
+// type Article = {
+//   title: string; // title of the article
+//   link: string; // link to the article
+//   description: string; // brief description of the article
+//   author: string | null; // author of the article
+//   category: string[] | null; // Specify one or more categories that the channel belongs to.
+//   comments: string; // link to the comments page
+//   pubDate: string; // date of publication
+// };
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct Article {
     pub title: String,
     pub link: String,
     pub description: String,
-    pub author: String,
-    pub category: String,
+    pub author: Option<String>,
+    pub category: Option<Vec<String>>,
+    pub comments: Option<String>,
     // casing only for purpose of JS compatibility
-    pub commentsLink: String,
-    pub guid: String,
-    // casing only for purpose of JS compatibility
-    pub publishedDate: String,
-    pub source: String,
-    pub content: String,
+    pub pubDate: Option<String>
 }
 
 impl Channel {
@@ -63,8 +72,8 @@ impl Channel {
         self.description = new_metadata.description;
         self.language = new_metadata.language;
         self.copyright = new_metadata.copyright;
-        self.channelManager = new_metadata.channelManager;
-        self.publishedDate = new_metadata.publishedDate;
+        self.managingEditor = new_metadata.managingEditor;
+        self.pubDate = new_metadata.pubDate;
         self.category = new_metadata.category;
 
         return self.save(app);
