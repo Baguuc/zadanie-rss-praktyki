@@ -27,7 +27,7 @@ const ChannelsProvider = ({ children }: PropsWithChildren<{}>) => {
     
     updateMetadata: (channelId: number, newData: ChannelMetadata) => refreshAfter(channelsRepo.updateMetadata(channelId, newData)),
     
-    addArticle: (channelId: number, article: Article) => refreshAfter(channelsRepo.addArticle(channelId, article))
+    updateArticles: (channelId: number, articles: Article[]) => refreshAfter(channelsRepo.updateArticles(channelId, articles))
   };
   
   return (

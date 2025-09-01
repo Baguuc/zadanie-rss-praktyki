@@ -79,8 +79,8 @@ impl Channel {
         return self.save(app);
     }
 
-    pub fn add_article(self: &mut Self, article: Article, app: &tauri::AppHandle) -> Result<(), crate::utils::json::SaveJsonError> {
-        self.articles.push(article);
+    pub fn update_articles(self: &mut Self, new_articles: Vec<Article>, app: &tauri::AppHandle) -> Result<(), crate::utils::json::SaveJsonError> {
+        self.articles = new_articles;
 
         return self.save(app);
     }

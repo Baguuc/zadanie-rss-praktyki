@@ -10,7 +10,7 @@ type ChannelsContext = {
   find: (channelId: number) => Channel | undefined;
   create: (data: ChannelMetadata) => void;
   updateMetadata: (channelId: number, newData: ChannelMetadata) => void;
-  addArticle: (channelId: number, article: Article) => void;
+  updateArticles: (channelId: number, article: Article[]) => void;
 };
 
 const ChannelsContext = createContext<ChannelsContext | null>(null);

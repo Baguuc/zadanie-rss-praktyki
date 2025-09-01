@@ -21,7 +21,7 @@ pub fn run() {
             commands::create_channel,
             commands::list_channels,
             commands::update_channel,
-            commands::add_article
+            commands::update_articles
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

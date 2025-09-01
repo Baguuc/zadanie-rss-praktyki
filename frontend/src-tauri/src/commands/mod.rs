@@ -39,26 +39,25 @@ impl serde::Serialize for UpdateChannelError {
 
 
 #[tauri::command]
-pub fn add_article(id: i32, article: crate::data::channel::Article, app: tauri::AppHandle) -> Result<(), AddArticleChannelError> {
-    println!("{:?}", article);
+pub fn update_articles(id: i32, new_articles: Vec<crate::data::channel::Article>, app: tauri::AppHandle) -> Result<(), UpdateArticleChannelError> {
     let mut channel = crate::data::channel::Channel::read(id, &app)?;
-    channel.add_article(article, &app)?;
+    channel.update_articles(new_articles, &app)?;
 
     return Ok(());
 }
 
 #[derive(thiserror::Error, Debug)]
-pub enum AddArticleChannelError {
+pub enum UpdateArticleChannelError {
     #[error("Read: {0}")]
     Read(#[from] crate::utils::json::ReadJsonError),
     #[error("Save: {0}")]
     Save(#[from] crate::utils::json::SaveJsonError)
 }
 
-impl serde::Serialize for AddArticleChannelError {
+impl serde::Serialize for UpdateArticleChannelError {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
         where
             S: serde::Serializer {
-        serializer.serialize_str("ADD_ARTICLE_CHANNEL_ERROR")
+        serializer.serialize_str("UPDATE_ARTICLE_CHANNEL_ERROR")
     }
 }

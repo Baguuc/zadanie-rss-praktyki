@@ -18,13 +18,13 @@ const list = async () => await invoke("list_channels") as Channel[];
 
 const updateMetadata = async (channelId: number, newData: ChannelMetadata) => await invoke("update_channel", { id: channelId, newMetadata: newData });
 
-const addArticle = async (channelId: number, article: Article) => await invoke('add_article', { id: channelId, article });
+const updateArticles = async (channelId: number, articles: Article[]) => await invoke('update_articles', { id: channelId, newArticles: articles });
 
 const channelsRepo = {
     create,
     list,
     updateMetadata,
-    addArticle
+    updateArticles
 };
 
 export default channelsRepo;

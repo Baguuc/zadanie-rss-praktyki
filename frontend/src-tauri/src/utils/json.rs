@@ -29,7 +29,7 @@ pub enum ReadJsonError {
     IO(#[from] crate::utils::fs::ReadFromAppDataError)
 }
 
-pub fn list_json<J: serde::de::DeserializeOwned>(file_path: String, app: &tauri::AppHandle) -> Result<Vec<J>, ListJsonError> {
+pub fn list_json<J: serde::Serialize + serde::de::DeserializeOwned>(file_path: String, app: &tauri::AppHandle) -> Result<Vec<J>, ListJsonError> {
     let listed = crate::utils::fs::list_from_app_data(file_path, app)?
         .into_iter()
         .filter_map(|entry| {
