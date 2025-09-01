@@ -2,7 +2,7 @@ import { Suspense, useState } from "react";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import { useNavigate } from "react-router";
-import { Article } from "../data/channels";
+import Article from "../models/article/type";
 import { useChannels } from "../hooks/channels";
 import useChannelId from "../hooks/channelId";
 import LoadingIndicator from "../components/LoadingIndicator";
@@ -30,10 +30,7 @@ function ChannelItemAddScreen() {
     // as link is unique for each article it can be used as GUID.
     data.guid = data.link;
     
-    await channels.addArticle({
-      channelId,
-      article: data,
-    });
+    await channels.addArticle(channelId, data);
 
     navigate(`/channels/${channelId}`);
   }

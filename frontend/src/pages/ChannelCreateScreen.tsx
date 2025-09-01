@@ -2,7 +2,7 @@ import { useNavigate } from "react-router";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import { useState } from "react";
-import { ChannelMetadata } from "../data/channels";
+import ChannelMetadata from "../models/channel-metadata/type";
 import { useChannels } from "../hooks/channels";
 
 function ChannelMetadataEditScreen() {
@@ -21,7 +21,7 @@ function ChannelMetadataEditScreen() {
   });
 
   async function create() {
-    channels.create({ data });
+    channels.create(data);
 
     navigate(`/channels`);
   }

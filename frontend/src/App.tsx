@@ -1,12 +1,12 @@
 import { Route, Routes } from "react-router";
 import "./App.css";
-import ChannelSelectionScreen from "./screens/ChannelSelectionScreen";
-import ChannelCreateScreen from "./screens/ChannelCreateScreen";
-import ChannelPreviewScreen from "./screens/ChannelPreviewScreen";
-import ChannelMetadataEditScreen from "./screens/ChannelMetadataEditScreen";
-import ChannelItemAddScreen from "./screens/ChannelItemAddScreen";
-import ChannelCorrectnessCheckScreen from "./screens/ChannelCorrectnessCheckScreen";
-import { ChannelsProvider } from "./hooks/channels";
+import ChannelSelectionScreen from "./pages/ChannelSelectionScreen";
+import ChannelCreateScreen from "./pages/ChannelCreateScreen";
+import ChannelPreviewScreen from "./pages/ChannelPreviewScreen";
+import ChannelMetadataEditScreen from "./pages/ChannelMetadataEditScreen";
+import ChannelItemAddScreen from "./pages/ChannelItemAddScreen";
+import ChannelCorrectnessCheckScreen from "./pages/ChannelCorrectnessCheckScreen";
+import { ChannelsProvider } from "./store/local-channels/providers";
 
 function App() {
   return (

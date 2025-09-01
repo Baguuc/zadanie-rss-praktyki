@@ -2,7 +2,7 @@ import { useNavigate } from "react-router";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import { Suspense, useEffect, useState } from "react";
-import { ChannelMetadata } from "../data/channels";
+import ChannelMetadata from "../models/channel-metadata/type";
 import { useChannels } from "../hooks/channels";
 import useChannelId from "../hooks/channelId";
 import LoadingIndicator from "../components/LoadingIndicator";
@@ -36,10 +36,7 @@ function ChannelMetadataEditScreen() {
   }, [channelId, channels.list]);
 
   async function update() {
-    await channels.updateMetadata({
-      channelId,
-      new: metadata,
-    });
+    await channels.updateMetadata(channelId, metadata);
 
     navigate(`/channels/${channelId}`);
   }

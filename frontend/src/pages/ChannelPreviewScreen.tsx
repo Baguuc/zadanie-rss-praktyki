@@ -5,7 +5,7 @@ import ChannelMetadata from "../components/ChannelMetadata";
 import ChannelUpdatedIndicator from "../components/ChannelUpdatedIndicator";
 import ButtonLink from "../components/ButtonLink";
 import { Suspense, useEffect, useState } from "react";
-import { Channel } from "../data/channels";
+import Channel from "../models/channel/type";
 import { useChannels } from "../hooks/channels";
 import useChannelId from "../hooks/channelId";
 import LoadingIndicator from "../components/LoadingIndicator";
