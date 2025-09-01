@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Article from "../../models/article/type";
 import ArticleListItem from "./ArticleListItem";
 import Button from "../../components/ui/Button";
@@ -9,10 +9,6 @@ const ArticleList = () => {
     const channels = useChannels();
     const channelId = useChannelId();
     const [data, setData] = useState<Article[]>((channels.find(channelId) ?? { articles: [] }).articles);
-
-    useEffect(() => {
-        console.log({ ...data });
-    }, [data]);
 
     if(channelId === -1) {
         return <h1 className="text-red-500">Nie znaleziono kanału</h1>

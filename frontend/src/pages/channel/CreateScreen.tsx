@@ -1,3 +1,4 @@
+import BackButton from "../../components/ui/BackButton";
 import ChannelMetadata from "../../features/channel-metadata/ChannelMetadata";
 import { useChannels } from "../../hooks/channels";
 import Root from "../../layouts/Root";
@@ -17,7 +18,7 @@ const ChannelCreateScreen = () => {
     category: null // Specify one or more categories that the channel belongs to
   };
 
-  return <Root navbarChildren={<p className="font-bold">Edytor RSS</p>}>
+  return <Root navbarChildren={[<BackButton />, <p className="font-bold">Edytor RSS</p>]}>
     <div className="flex flex-col gap-[10px] place-items-center place-content-center">
       <h1 className="text-[17px] font-bold p-0 m-0">Stwórz kanał</h1>
       <ChannelMetadata 

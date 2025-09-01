@@ -4,20 +4,19 @@ import ChannelMetadata from "../../features/channel-metadata/ChannelMetadata";
 import useChannelId from "../../hooks/channelId";
 import { useChannels } from "../../hooks/channels";
 import Root from "../../layouts/Root";
+import BackButton from "../../components/ui/BackButton";
 
 function ChannelViewScreen() {
   const channels = useChannels();
   const channelId = useChannelId();
 
-  console.log(channelId);
-
-  if(!channels.find(channelId)) {
-    return <Root navbarChildren={<p className="font-bold">Edytor RSS</p>}>
+  if(channelId === -1) {
+    return <Root navbarChildren={[<BackButton />, <p className="font-bold">Edytor RSS</p>]}>
       <h1 className="text-red-500">Nie znaleziono kanału</h1>
     </Root>
   }
 
-  return <Root navbarChildren={<p className="font-bold">{channels.find(channelId)!.title}</p>}>
+  return <Root navbarChildren={[<BackButton />, <p className="font-bold">{channels.find(channelId)?.title}</p>]}>
     <div className="flex flex-col gap-[10px] place-items-center place-content-center">
       <h1 className="text-[17px] font-bold p-0 m-0">Dane kanału</h1>
       <ChannelMetadata 
