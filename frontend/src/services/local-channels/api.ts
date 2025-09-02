@@ -20,11 +20,31 @@ const updateMetadata = async (channelId: number, newData: ChannelMetadata) => aw
 
 const updateArticles = async (channelId: number, articles: Article[]) => await invoke('update_articles', { id: channelId, newArticles: articles });
 
+const sync = async (url: string, ) => {
+    for(let channel of await list()) {
+      const headers = new Headers();
+      headers.append("Content-Type", "application/json");
+      
+      const res = await fetch(`${url}/channels/${channel.id}`, {
+        headers,
+        method: "POST",
+        body: JSON.stringify(channel)
+      });
+
+      console.log(res.status);
+
+      if(!res.ok) {
+        return Promise.reject("server offline")
+      }
+    }
+}
+
 const channelsRepo = {
     create,
     list,
     updateMetadata,
-    updateArticles
+    updateArticles,
+    sync
 };
 
 export default channelsRepo;

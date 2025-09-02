@@ -11,6 +11,7 @@ type ChannelsContext = {
   create: (data: ChannelMetadata) => void;
   updateMetadata: (channelId: number, newData: ChannelMetadata) => void;
   updateArticles: (channelId: number, article: Article[]) => void;
+  sync: (url: string, onSuccess: () => void, onFail: () => void) => void;
 };
 
 const ChannelsContext = createContext<ChannelsContext | null>(null);
