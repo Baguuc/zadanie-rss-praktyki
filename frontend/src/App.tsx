@@ -7,6 +7,7 @@ import ChannelViewScreen from "./pages/channel/ViewScreen";
 import ArticlesListScreen from "./pages/articles/ListScreen";
 import ChannelCheckScreen from "./pages/channel/CheckScreen";
 import Index from "./pages/Index";
+import ChannelSyncScreen from "./pages/channel/SyncScreen";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path="articles" element={<ArticlesListScreen />} />
           </Route>
           <Route path="check" element={<ChannelCheckScreen />} />
+          <Route path="sync" element={<ChannelSyncScreen />} />
         </Route>
       </Routes>
     </ChannelsProvider>
