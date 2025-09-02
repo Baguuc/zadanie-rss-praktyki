@@ -13,5 +13,8 @@ fn rocket() -> _ {
 
     rocket::build()
         .manage(config)
-        .mount("/channels", rocket::routes![routes::channels::get_channel::controller])
+        .mount("/channels", rocket::routes![
+            routes::channels::get_channel::controller,
+            routes::channels::save::controller
+        ])
 }
