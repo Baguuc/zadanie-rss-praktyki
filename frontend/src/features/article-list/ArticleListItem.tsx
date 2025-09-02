@@ -34,11 +34,14 @@ const ArticleListItem = ({ article, onInput }: Props) => {
 };
 
 const createInput = (placeholder: string, valueToSet: keyof Article, data: Article, setData: React.Dispatch<React.SetStateAction<Article>>) => {
-    const defaultValue = data[valueToSet] instanceof Array
-        ? data[valueToSet].join(";")
-        : data[valueToSet] === null
-            ? undefined
-            : data[valueToSet];
+    const value = data[valueToSet];
+    const defaultValue = value instanceof Array
+        ? value.join(";")
+        : value instanceof Date
+            ? value.toISOString()
+            : value === null
+                ? undefined
+                : value;
     
     return <Input
         placeholder={placeholder}

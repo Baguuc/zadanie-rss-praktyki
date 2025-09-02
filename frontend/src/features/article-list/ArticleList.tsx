@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {  useState } from "react";
 import Article from "../../models/article/type";
 import ArticleListItem from "./ArticleListItem";
 import Button from "../../components/ui/Button";
@@ -8,9 +8,10 @@ import useChannelId from "../../hooks/channelId";
 const ArticleList = () => {
     const channels = useChannels();
     const channelId = useChannelId();
-    const [data, setData] = useState<Article[]>((channels.find(channelId) ?? { articles: [] }).articles);
+    const channel = (channels.find(channelId));
+    const [data, setData] = useState<Article[]>((channel ?? { articles: [] }).articles);
 
-    if(channelId === -1) {
+    if(channelId === -1 || !channel) {
         return <h1 className="text-red-500">Nie znaleziono kanału</h1>
     }
     
@@ -35,10 +36,10 @@ const ArticleList = () => {
                 title: "", 
                 description: "", 
                 link: "", 
+                pubDate: new Date(),
                 author: "", 
                 category: [], 
-                comments: "", 
-                pubDate: "" 
+                comments: ""
             }]);
         }}>Dodaj</Button>
         <Button onClick={() => {

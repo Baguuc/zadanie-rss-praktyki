@@ -9,8 +9,6 @@ type Channel = {
   copyright: string | null; // Copyright notice for content in the channel.
   managingEditor: string | null; // Email address for person responsible for editorial content.
   webMaster: string | null; // Email address for person responsible for technical issues relating to channel.
-  pubDate: string | null; // The publication date for the content in the channel.
-  lastBuildDate: string | null; // 	The last time the content of the channel changed.
   category: string[] | null; // Specify one or more categories that the channel belongs to.
   articles: Article[]; // list of articles
 };

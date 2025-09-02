@@ -1,3 +1,5 @@
+use chrono::{DateTime, Utc};
+
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 
 pub struct Channel {
@@ -10,8 +12,6 @@ pub struct Channel {
     // casing only for purpose of JS compatibility
     pub managingEditor: Option<String>,
     pub webMaster: Option<String>,
-    // casing only for purpose of JS compatibility
-    pub pubDate: Option<String>,
     pub category: Option<Vec<String>>,
     pub articles: Vec<Article>,
 }
@@ -26,31 +26,19 @@ pub struct ChannelMetadata {
     // casing only for purpose of JS compatibility
     pub managingEditor: Option<String>,
     pub webMaster: Option<String>,
-    // casing only for purpose of JS compatibility
-    pub pubDate: Option<String>,
-    pub category: Option<Vec<String>>,
+    pub category: Option<Vec<String>>
 }
-
-// type Article = {
-//   title: string; // title of the article
-//   link: string; // link to the article
-//   description: string; // brief description of the article
-//   author: string | null; // author of the article
-//   category: string[] | null; // Specify one or more categories that the channel belongs to.
-//   comments: string; // link to the comments page
-//   pubDate: string; // date of publication
-// };
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct Article {
     pub title: String,
     pub link: String,
     pub description: String,
+    // casing only for purpose of JS compatibility
+    pub pubDate: DateTime<Utc>,
     pub author: Option<String>,
     pub category: Option<Vec<String>>,
-    pub comments: Option<String>,
-    // casing only for purpose of JS compatibility
-    pub pubDate: Option<String>
+    pub comments: Option<String>
 }
 
 impl Channel {
@@ -73,7 +61,6 @@ impl Channel {
         self.language = new_metadata.language;
         self.copyright = new_metadata.copyright;
         self.managingEditor = new_metadata.managingEditor;
-        self.pubDate = new_metadata.pubDate;
         self.category = new_metadata.category;
 
         return self.save(app);
