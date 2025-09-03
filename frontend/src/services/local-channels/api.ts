@@ -39,12 +39,22 @@ const sync = async (url: string, ) => {
     }
 }
 
+const checkCompliance = async (url: string) => {
+    const response = await fetch(url);
+    const text = await response.text();
+    console.log(url, text);
+    const isCompliant = await invoke("check_compliance", { channelString: text });
+
+    return isCompliant as boolean;
+}
+
 const channelsRepo = {
     create,
     list,
     updateMetadata,
     updateArticles,
-    sync
+    sync,
+    checkCompliance
 };
 
 export default channelsRepo;

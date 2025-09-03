@@ -33,6 +33,12 @@ const ChannelsProvider = ({ children }: PropsWithChildren<{}>) => {
       channelsRepo.sync(url)
         .then(onSuccess)
         .catch(onFail);
+    },
+
+    checkCompliance: (url: string, onCompliance: () => void, onNonCompliance: () => void) => {
+      channelsRepo
+        .checkCompliance(url)
+        .then((compliant) => compliant ? onCompliance() : onNonCompliance());
     }
   };
   

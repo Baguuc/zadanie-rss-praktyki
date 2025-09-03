@@ -1,7 +1,6 @@
 use chrono::{DateTime, Utc};
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
-
 pub struct Channel {
     pub id: i32,
     pub title: String,

@@ -21,7 +21,8 @@ pub fn run() {
             commands::create_channel,
             commands::list_channels,
             commands::update_channel,
-            commands::update_articles
+            commands::update_articles,
+            commands::check_compliance
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
