@@ -44,7 +44,8 @@ pub struct BodyArticle {
     pub link: String,
     pub description: String,
     // casing only for purpose of JS compatibility
-    pub pubDate: DateTime<Utc>,
+    #[serde(rename = "pubDate")]
+    pub pub_date: DateTime<Utc>,
     pub author: Option<String>,
     pub category: Option<Vec<String>>,
     pub comments: Option<String>
@@ -73,8 +74,8 @@ pub struct SerializeToArticle {
     pub title: String,
     pub link: String,
     pub description: String,
-    // casing only for purpose of JS compatibility
-    pub pubDate: DateTime<Utc>,
+    #[serde(rename = "pubDate")]
+    pub pub_date: DateTime<Utc>,
     pub author: Option<String>,
     pub category: Option<Vec<String>>,
     pub comments: Option<String>
@@ -102,7 +103,7 @@ impl Into<SerializeToArticle> for BodyArticle {
             title: self.title,
             link: self.link,
             description: self.description,
-            pubDate: self.pubDate,
+            pub_date: self.pub_date,
             author: self.author,
             category: self.category,
             comments: self.comments
