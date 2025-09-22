@@ -1,19 +1,27 @@
 import { Link } from "react-router";
 import Button from "../../components/ui/Button";
-import ChannelMetadata from "../../features/channel-metadata/ChannelMetadata";
 import useChannelId from "../../hooks/channelId";
 import { useChannels } from "../../hooks/channels";
 import Root from "../../layouts/Root";
 import BackButton from "../../components/ui/BackButton";
+import { useEffect, useState } from "react";
+import TChannelMetadata from "../../models/channel-metadata/type";
+import ChannelMetadata from "../../features/channel-metadata/ChannelMetadata";
 
 function ChannelViewScreen() {
   const channels = useChannels();
   const channelId = useChannelId();
+  const [channelMetadata, setChannelMetadata] = useState<TChannelMetadata | undefined>(undefined);
+  
+  useEffect(() => {
+    const channel = channels.find(channelId);
+    if(!channel) return;
+        
+    setChannelMetadata(channel);
+  }, [channelId]);
 
-  if(channelId === -1) {
-    return <Root navbarChildren={[<BackButton />, <p className="font-bold">Edytor RSS</p>]}>
-      <h1 className="text-red-500">Nie znaleziono kanału</h1>
-    </Root>
+  if(!channelMetadata) {
+    return <h1 className="text-red-500">Nie znaleziono kanału</h1>
   }
 
   return <Root navbarChildren={[<BackButton />, <p className="font-bold">{channels.find(channelId)?.title}</p>]}>

@@ -2,11 +2,12 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 
 function useChannelId() {
-  const { channelId: _channelId } = useParams();
+  const params = useParams();
   const [channelId, setChannelId] = useState(-1);
 
   useEffect(() => {
-    const id = parseInt(_channelId || "");
+    console.log(params.channelId || "");
+    const id = parseInt(params.channelId || "");
 
     if (!id) {
       return;

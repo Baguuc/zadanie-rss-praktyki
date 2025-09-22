@@ -1,38 +1,44 @@
-import {  useState } from "react";
-import Article from "../../models/article/type";
+import {  useEffect, useState } from "react";
 import ArticleListItem from "./ArticleListItem";
 import Button from "../../components/ui/Button";
 import { useChannels } from "../../hooks/channels";
 import useChannelId from "../../hooks/channelId";
+import Article from "../../models/article/type";
 
 const ArticleList = () => {
     const channels = useChannels();
     const channelId = useChannelId();
-    const channel = (channels.find(channelId));
-    const [data, setData] = useState<Article[]>((channel ?? { articles: [] }).articles);
+    const [articles, setArticles] = useState<Article[] | null>(null);
 
-    if(channelId === -1 || !channel) {
+    useEffect(() => {
+        const channel = channels.find(channelId);
+        if(!channel) return;
+        
+        setArticles(channel.articles);
+    }, [channelId]);
+
+    if(!articles) {
         return <h1 className="text-red-500">Nie znaleziono kanału</h1>
     }
     
     return <div className="flex flex-col gap-[10px]">
         <div className="flex flex-col gap-[10px] max-h-[300px] overflow-y-scroll">
-            {data.map((article: Article, idx: number) => (
+            {articles.map((article: Article, idx: number) => (
                 <ArticleListItem
                     article={article}
                     onInput={(updatedArticle) => {
                         // Create a new array with the updated article
-                        const newData = data.map((item, index) => 
+                        const newData = articles.map((item, index) => 
                             index === idx ? updatedArticle : item
                         );
-                        setData(newData);
+                        setArticles(newData);
                     }}
                     key={idx}
                 />
             ))}
         </div>
         <Button onClick={() => {
-            setData([...data, { 
+            setArticles([...articles, { 
                 title: "", 
                 description: "", 
                 link: "", 
@@ -43,7 +49,7 @@ const ArticleList = () => {
             }]);
         }}>Dodaj</Button>
         <Button onClick={() => {
-            channels.updateArticles(channelId, data);
+            channels.updateArticles(channelId, articles);
         }}>Zapisz</Button>
     </div>
 };

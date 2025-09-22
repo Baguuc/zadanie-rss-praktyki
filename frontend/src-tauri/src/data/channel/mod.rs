@@ -9,8 +9,10 @@ pub struct Channel {
     pub language: Option<String>,
     pub copyright: Option<String>,
     // casing only for purpose of JS compatibility
-    pub managingEditor: Option<String>,
-    pub webMaster: Option<String>,
+    #[serde(rename = "managingEditor")]
+    pub managing_editor: Option<String>,
+    #[serde(rename = "webMaster")]
+    pub web_master: Option<String>,
     pub category: Option<Vec<String>>,
     pub articles: Vec<Article>,
 }
@@ -23,8 +25,10 @@ pub struct ChannelMetadata {
     pub language: Option<String>,
     pub copyright: Option<String>,
     // casing only for purpose of JS compatibility
-    pub managingEditor: Option<String>,
-    pub webMaster: Option<String>,
+    #[serde(rename = "managingEditor")]
+    pub managing_editor: Option<String>,
+    #[serde(rename = "webMaster")]
+    pub web_master: Option<String>,
     pub category: Option<Vec<String>>
 }
 
@@ -34,7 +38,8 @@ pub struct Article {
     pub link: String,
     pub description: String,
     // casing only for purpose of JS compatibility
-    pub pubDate: DateTime<Utc>,
+    #[serde(rename = "pubDate")]
+    pub pub_date: DateTime<Utc>,
     pub author: Option<String>,
     pub category: Option<Vec<String>>,
     pub comments: Option<String>
@@ -59,7 +64,7 @@ impl Channel {
         self.description = new_metadata.description;
         self.language = new_metadata.language;
         self.copyright = new_metadata.copyright;
-        self.managingEditor = new_metadata.managingEditor;
+        self.managing_editor = new_metadata.managing_editor;
         self.category = new_metadata.category;
 
         return self.save(app);
