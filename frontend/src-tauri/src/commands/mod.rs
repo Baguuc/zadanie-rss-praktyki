@@ -65,22 +65,32 @@ impl serde::Serialize for UpdateArticleChannelError {
 
 #[tauri::command]
 pub fn check_compliance(channel_string: String) -> bool {
-    // the structure is modeled in a way in which if the deserialization fail, it means the feed is not compliant
-    // missing a required field, providing wrong value for a field or in a wrong format overall
+    let langs = vec!["af", "sq", "eu", "be", "bg", "ca", "zh-cn", "zh-tw", "hr", "cs", "da", "nl", "nl-be", "nl-nl", "en", "en-au", "en-bz", "en-ca", "en-ie", "en-jm", "en-nz", "en-ph", "en-za", "en-tt", "en-gb", "en-us", "en-zw", "et", "fo", "fi", "fr", "fr-be", "fr-ca", "fr-fr", "fr-lu", "fr-mc", "fr-ch", "gl", "gd", "de", "de-at", "de-de", "de-li", "de-lu", "de-ch", "el", "ha", "hu", "is", "in", "ga", "it", "it-it", "it-ch", "ja", "ko", "mk", "no", "pl", "pt", "pt-br", "pt-pt", "ro", "ro-mo", "ro-ro", "ru", "ru-mo", "ru-ru", "sr", "sk", "sl", "es", "es-ar", "es-bo", "es-cl", "es-co", "es-cr", "es-do", "es-ec", "es-sv", "es-gt", "es-hn", "es-mx", "es-ni", "es-pa", "es-py", "es-pe", "es-pr", "es-es", "es-uy", "es-ve", "sv", "sv-fi", "sv-se", "tr", "uk"];
+
     let channel: XmlChannel = match serde_xml_rs::from_str(&channel_string) {
         Ok(channel) => channel,
-        Err(_) => return false
+        Err(err) => {
+            println!("{}", err);
+            return false;
+        }
     };
+
+    if let Some(language) = channel.language {
+        if !langs.contains(&language.as_str()) {
+            return false;
+        }
+    }
 
     if let Some(image) = channel.image {
         if let Some(width) = image.width {
-            if width > 144 { return false; }
+            if width > 144 { println!("wrong image width"); return false; }
         }
 
         if let Some(height) = image.height {
-            if height > 400 { return false; }
+            if height > 400 { println!("wrong image height"); return false; }
         }
     }
+
     return true;
 }
 
@@ -93,7 +103,7 @@ pub struct XmlChannel {
     pub title: String,
     pub link: String,
     pub description: String,
-    pub language: Option<ChannelLanguage>,
+    pub language: Option<String>,
     pub copyright: Option<String>,
     #[serde(rename = "managingEditor")]
     pub managing_editor: Option<String>,
@@ -136,163 +146,6 @@ pub struct ChannelTextInput {
     pub description: String,
     pub name: String,
     pub link: String
-}
-
-#[derive(Debug, Clone, serde::Deserialize)]
-#[serde(rename_all = "lowercase")]
-pub enum ChannelLanguage {
-    Af,
-    Sq,
-    Eu,
-    Be,
-    Bg,
-    Ca,
-    #[serde(rename = "zh-cn")]
-    ZhCn,
-    #[serde(rename = "zh-tw")]
-    ZhTw,
-    Hr,
-    Cs,
-    Da,
-    Nl,
-    #[serde(rename = "nl-be")]
-    NlBe,
-    #[serde(rename = "nl-nl")]
-    NlNl,
-    En,
-    #[serde(rename = "en-au")]
-    EnAu,
-    #[serde(rename = "en-bz")]
-    EnBz,
-    #[serde(rename = "en-ca")]
-    EnCa,
-    #[serde(rename = "en-ie")]
-    EnIe,
-    #[serde(rename = "en-jm")]
-    EnJm,
-    #[serde(rename = "en-nz")]
-    EnNz,
-    #[serde(rename = "en-ph")]
-    EnPh,
-    #[serde(rename = "en-za")]
-    EnZa,
-    #[serde(rename = "en-tt")]
-    EnTt,
-    #[serde(rename = "en-gb")]
-    EnGb,
-    #[serde(rename = "en-us")]
-    EnUs,
-    #[serde(rename = "en-zw")]
-    EnZw,
-    Et,
-    Fo,
-    Fi,
-    Fr,
-    #[serde(rename = "fr-be")]
-    FrBe,
-    #[serde(rename = "fr-ca")]
-    FrCa,
-    #[serde(rename = "fr-fr")]
-    FrFr,
-    #[serde(rename = "fr-lu")]
-    FrLu,
-    #[serde(rename = "fr-mc")]
-    FrMc,
-    #[serde(rename = "fr-ch")]
-    FrCh,
-    Gl,
-    Gd,
-    De,
-    #[serde(rename = "de-at")]
-    DeAt,
-    #[serde(rename = "de-de")]
-    DeDe,
-    #[serde(rename = "de-li")]
-    DeLi,
-    #[serde(rename = "de-lu")]
-    DeLu,
-    #[serde(rename = "de-ch")]
-    DeCh,
-    El,
-    Ha,
-    Hu,
-    Is,
-    In,
-    Ga,
-    It,
-    #[serde(rename = "it-it")]
-    ItIt,
-    #[serde(rename = "it-ch")]
-    ItCh,
-    Ja,
-    Ko,
-    Mk,
-    No,
-    Pl,
-    Pt,
-    #[serde(rename = "pt-br")]
-    PtBr,
-    #[serde(rename = "pt-pt")]
-    PtPt,
-    Ro,
-    #[serde(rename = "ro-mo")]
-    RoMo,
-    #[serde(rename = "ro-ro")]
-    RoRo,
-    Ru,
-    #[serde(rename = "ru-mo")]
-    RuMo,
-    #[serde(rename = "ru-ru")]
-    RuRu,
-    Sr,
-    Sk,
-    Sl,
-    Es,
-    #[serde(rename = "es-ar")]
-    EsAr,
-    #[serde(rename = "es-bo")]
-    EsBo,
-    #[serde(rename = "es-cl")]
-    EsCl,
-    #[serde(rename = "es-co")]
-    EsCo,
-    #[serde(rename = "es-cr")]
-    EsCr,
-    #[serde(rename = "es-do")]
-    EsDo,
-    #[serde(rename = "es-ec")]
-    EsEc,
-    #[serde(rename = "es-sv")]
-    EsSv,
-    #[serde(rename = "es-gt")]
-    EsGt,
-    #[serde(rename = "es-hn")]
-    EsHn,
-    #[serde(rename = "es-mx")]
-    EsMx,
-    #[serde(rename = "es-ni")]
-    EsNi,
-    #[serde(rename = "es-pa")]
-    EsPa,
-    #[serde(rename = "es-py")]
-    EsPy,
-    #[serde(rename = "es-pe")]
-    EsPe,
-    #[serde(rename = "es-pr")]
-    EsPr,
-    #[serde(rename = "es-es")]
-    EsEs,
-    #[serde(rename = "es-uy")]
-    EsUy,
-    #[serde(rename = "es-ve")]
-    EsVe,
-    Sv,
-    #[serde(rename = "sv-fi")]
-    SvFi,
-    #[serde(rename = "sv-se")]
-    SvSe,
-    Tr,
-    Uk,
 }
 
 #[derive(Debug, Clone, serde::Deserialize)]
