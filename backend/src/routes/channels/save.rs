@@ -55,6 +55,8 @@ pub struct BodyArticle {
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 #[serde(rename = "rss")]
 pub struct SerializeTo {
+    #[serde(rename = "@version")]
+    pub version: String,
     pub title: String,
     pub link: String,
     pub description: String,
@@ -84,6 +86,7 @@ pub struct SerializeToArticle {
 impl Into<SerializeTo> for RequestBody {
     fn into(self) -> SerializeTo {
         return SerializeTo {
+            version: String::from("2.0"),
             title: self.title,
             link: self.link,
             description: self.description,
