@@ -29,10 +29,13 @@ const ChannelsProvider = ({ children }: PropsWithChildren<{}>) => {
     
     updateArticles: (channelId: number, articles: Article[]) => refreshAfter(channelsRepo.updateArticles(channelId, articles)),
 
-    sync: (url: string, onSuccess: () => void, onFail: () => void) => {
-      channelsRepo.sync(url)
+    sync: (url: string, password: string, onSuccess: () => void, onWrongPassword: () => void, onFail: () => void) => {
+      channelsRepo.sync(url, password)
         .then(onSuccess)
-        .catch(onFail);
+        .catch((reason) => {
+          if(reason === "WRONG_PASSWORD") onWrongPassword();
+          else onFail();
+        });
     },
 
     checkCompliance: (url: string, onCompliance: () => void, onNonCompliance: () => void) => {

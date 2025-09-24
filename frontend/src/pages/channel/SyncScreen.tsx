@@ -7,6 +7,7 @@ import { useChannels } from "../../hooks/channels";
 
 const ChannelSyncScreen = () => {
     const [url, setUrl] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
     const [status, setStatus] = useState<boolean>(false);
     const channels = useChannels();
 
@@ -16,9 +17,15 @@ const ChannelSyncScreen = () => {
             <p className="text-[12px] font-bold p-0 m-0">Status serwera: {status ? "online" : "offline"}</p>
             <div className="p-[12px] gap-[12px] rounded-[8px] flex flex-col bg-neutral-800">
                 <Input placeholder="Link do serwera" defaultValue="..." onInput={(ev) => setUrl((ev.target as any).value)} />
+                <Input placeholder="Hasło do serwera" defaultValue="..." onInput={(ev) => setPassword((ev.target as any).value)} />
             </div>
             <Button onClick={() => {
-                channels.sync(url, () => { alert("Wysłano kanały na serwer"); setStatus(true); }, () => { alert("Serwer jest offline!"); setStatus(false); })
+                channels.sync(
+                    url, password, 
+                    () => { alert("Wysłano kanały na serwer"); setStatus(true); }, 
+                    () => { alert("Złe hasło!"); setStatus(true); }, 
+                    () => { alert("Serwer jest offline!"); setStatus(false); }
+                )
             }}>Wyślij</Button>
         </div>
     </Root>);

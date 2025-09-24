@@ -1,12 +1,19 @@
 use rocket::{http::Status, response::status, serde::json::Json};
 use chrono::{DateTime, Utc};
 
+use crate::utils::SavePassword;
+
 #[rocket::post("/<channel_id>", data = "<content>")]
 pub async fn controller(
     channel_id: u32,
     content: Json<RequestBody>,
+    save_password: SavePassword<'_>,
     config: &rocket::State<crate::config::Config>
-) -> rocket::response::status::Custom<String> {
+) -> rocket::response::status::Custom<String> {    
+    if save_password.to_string() != config.save_password {
+        return status::Custom(Status::Unauthorized, String::from("Wrong password"));
+    }
+
     let to_serialize: SerializeTo = content.0.into();
     let serialized = match serde_xml_rs::to_string(&to_serialize) {
         Ok(s) => s,

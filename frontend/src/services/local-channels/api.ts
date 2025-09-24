@@ -20,10 +20,11 @@ const updateMetadata = async (channelId: number, newData: ChannelMetadata) => aw
 
 const updateArticles = async (channelId: number, articles: Article[]) => await invoke('update_articles', { id: channelId, newArticles: articles });
 
-const sync = async (url: string, ) => {
+const sync = async (url: string, password: string) => {
     for(let channel of await list()) {
       const headers = new Headers();
       headers.append("Content-Type", "application/json");
+      headers.append("Authorization", password);
       
       const res = await fetch(`${url}/channels/${channel.id}`, {
         headers,
@@ -34,7 +35,10 @@ const sync = async (url: string, ) => {
       console.log(res.status);
 
       if(!res.ok) {
-        return Promise.reject("server offline")
+        if(res.status === 401)
+          return Promise.reject("WRONG_PASSWORD")
+        else
+          return Promise.reject("SERVER_OFFLINE")
       }
     }
 }

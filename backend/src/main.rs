@@ -1,5 +1,6 @@
 pub mod routes;
 pub mod config;
+pub mod utils;
 
 use rocket::http::Header;
 use rocket::{Request, Response};

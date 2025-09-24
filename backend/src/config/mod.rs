@@ -1,6 +1,7 @@
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct Config {
     pub data_path: String,
+    pub save_password: String,
     pub port: u16
 }
 
