@@ -1,12 +1,13 @@
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct Config {
-    pub data_path: String
+    pub data_path: String,
+    pub port: u16
 }
 
 impl Config {
     pub fn read() -> Result<Self, ConfigReadError> {
         let content = std::fs::read_to_string("./config.json")?;
-        let parsed= serde_json::from_str(&content)?;
+        let parsed = serde_json::from_str(&content)?;
 
         return Ok(parsed)
     }

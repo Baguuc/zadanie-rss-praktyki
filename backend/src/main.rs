@@ -16,6 +16,7 @@ fn rocket() -> _ {
     };
 
     rocket::build()
+        .configure(rocket::Config::figment().merge(("port", config.port)))
         .manage(config)
         .attach(CORS)
         .mount("/channels", rocket::routes![
